@@ -1,0 +1,62 @@
+\section{Results\label{sec:results}}
+
+\begin{table}[!hbt]
+  \newcolumntype{C}{>{\centering\let\newline\\\arraybackslash\hspace{0pt}$}c<{$}}
+  \newcolumntype{R}{>{\centering\let\newline\\\arraybackslash\hspace{0pt}$}r<{$}}
+  \newcolumntype{L}{>{\centering\let\newline\\\arraybackslash\hspace{0pt}$}l<{$}}
+  \newcolumntype{A}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}D{.}{.}{#1}}
+  % alternatively use (but it only works with texlive 2015)
+  % \newcolumntype{A}[1]{>{}S[table-format=#1,table-number-alignment=center-decimal-marker]}
+  %
+  % The multicolumn in the header row is to protect form column type
+  \centering
+  \small
+  \begin{tabular}{A{3.0} A{3.2} A{3.2} R L A{1.2} A{3.2} A{3.2} A{3.2}}\toprule
+    \multirow{2}{*}[-6pt]{$N$}
+    &\multicolumn{2}{c}{Time~(sec)}
+    &\multicolumn{2}{c}{Max Rank}
+    &\multicolumn{1}{c}{\multirow{2}{*}[-6pt]{\parbox[c]{.7in}{\centering Memory~(MB)\\$\O{\log N}$}}}
+    &\multicolumn{3}{c}{Inverse~Apply~(sec)}
+    \\\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){7-9}
+    %%
+    &\multicolumn{1}{c}{\parbox[c]{.6in}{\centering Compress\\$\O{\log N}$}}
+    &\multicolumn{1}{c}{\parbox[c]{.6in}{\centering Inverse\\$\O{\log N}$}}
+    &\text{Forward}
+    &\text{Inverse}
+    &
+    &\multicolumn{1}{c}{\parbox[c]{.6in}{\centering Solve\\$\O{N \log N}$}}
+    &\multicolumn{2}{c}{\parbox[c]{1.2in}{\centering TT Solve\\Compress \& Apply\\$\O{\log N}$}}
+    \\ \midrule
+    16^3  & 2.79 & 118.19 & 103  & 144  & 2.60 & 0.07   & 0.72  & 2.41 \\
+    32^3  & 2.89 & 141.27 & 106  & 125  & 2.86 & 0.76   & 1.19  & 4.87 \\
+    64^3  & 4.35 & 82.07  & \099 & \097 & 2.29 & 4.41   & 4.40  & 4.79 \\
+    128^3 & 5.69 & 60.23  & \090 & \074 & 1.68 & 29.31  & 27.52 & 3.80 \\
+    256^3 & 6.04 & 33.53  & \080 & \057 & 1.19 & 189.53 & 31.93 & 2.39 \\
+    \bottomrule
+  \end{tabular}
+  \mcaption{tbl:tlabel}{Decimal Aligned Table}{\lipsum[6]}
+\end{table}
+
+\lipsum[8-12]
+
+%pgfplot template
+\begin{figure}[!hbt]
+  \centering
+  \setlength\figurewidth{3in}
+  \setlength\figureheight{2in}
+  %\fbox{%
+  \hspace*{-28pt}\includepgf{inset}%
+  %}
+  \mcaption{fig:a}{Tikz example}{Plot with inset and data file}
+\end{figure}
+
+%group plots template
+\begin{figure}[!hbt]
+  \centering
+  \setlength\figurewidth{1.5in}
+  \setlength\figureheight{1.5in}
+  %\fbox{%
+  \hspace*{-28pt}\includepgf{group}%
+  %}
+  \mcaption{fig:b}{Tikz example}{Group plot}
+\end{figure}

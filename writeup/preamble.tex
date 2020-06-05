@@ -1,0 +1,492 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Standard preamble for AR                                 %%%%%%%%%%%%%%%%%%%%
+%% Add items either before this line or at the bottom       %%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% use pdf 1.4 to be compatible with Elsevier requirement
+% \usepackage{pdf14}
+
+%%------------------------------------------------------------------------------
+%%- Font and typesetting
+%%------------------------------------------------------------------------------
+\usepackage[T1]{fontenc}
+\usepackage[latin1]{inputenc}
+%%\usepackage{tgpagella}
+\usepackage[sc,osf]{mathpazo}\linespread{1.05} %add/remove osf to toggle old-fashioned numbers
+
+%% \usepackage[bitstream-charter]{mathdesign} %\usepackage{charter} with no implication on math
+%% \usepackage[scaled]{berasans}              %sans to complement bitstream-charter
+
+%\renewcommand*{\familydefault}{\sfdefault} %for sans fonts as default
+\usepackage[activate={true,nocompatibility},spacing,kerning]{microtype}
+
+%%------------------------------------------------------------------------------
+%%- page setup
+%%------------------------------------------------------------------------------
+\newlength{\alphabet}
+\settowidth{\alphabet}{\normalfont abcdefghijklmnopqrstuvwxyz}
+\usepackage{geometry}   %it is typically loaded by els
+\geometry{textwidth=3.4\alphabet,top=1in, bottom=1.25in}
+\renewcommand{\textfraction}{0.03}
+\renewcommand{\topfraction}{0.95}
+\renewcommand{\bottomfraction}{0.5}
+\renewcommand{\baselinestretch}{1.048}
+
+%%------------------------------------------------------------------------------
+%%- Math typesetting
+%%------------------------------------------------------------------------------
+\usepackage[fleqn,reqno]{amsmath} % fleqn=fixed indent, reqno=right equation number
+\usepackage{stmaryrd}             % more symbols (St Mary Road symbols for theoretical computer science)
+\usepackage{mathrsfs}
+%% amsfonts and amssymb with mathpazo fills up math fonts and gives error
+%% \usepackage{amsfonts}             % extended set of fonts for math: bold, fraktur, etc
+%% \usepackage{amssymb}              % symbols --> conflicts with charter font
+\usepackage{mathtools}
+\usepackage{bm}
+\DeclareMathAlphabet{\mathpzc}{OT1}{pzc}{m}{it} %another typeface for calligraphic math with lowercase support
+
+%% to have customized label for subequations
+%% http://tex.stackexchange.com/questions/187372/numbering-parentequation-of-subequations
+\makeatletter
+\newenvironment{namedsubequations}[1]
+ {%
+  \addtocounter{equation}{-1}%
+  \begin{subequations}
+    \renewcommand{\theparentequation}{#1}%
+    \renewcommand{\theequation}{\theparentequation \arabic{equation}}
+    \def\@currentlabel{#1}%
+ }
+ {%
+  \end{subequations}\ignorespacesafterend
+ }
+\makeatother
+
+\newcommand\mbf[1]{\ensuremath{\mathbf{#1}}}
+
+%%------------------------------------------------------------------------------
+%%- utility packages
+%%------------------------------------------------------------------------------
+\usepackage{xspace}                   % smart spacing
+\usepackage{xifthen}
+\usepackage{verbatim}
+\usepackage{ifdraft}
+\usepackage{paralist}                 % inline lists
+\usepackage[modulo]{lineno}
+\usepackage{lipsum}                   % filler
+\usepackage{soul}                     % hyphenation, underline \ul, overstrike \st, highlight \hl, etc.
+\newcommand\showkeyslabelformat[1]{%
+  \fbox{\raggedright\normalfont\footnotesize\ttfamily#1}} %smaller to fit better in the fullpage margin
+\usepackage[notref,notcite]{showkeys}
+
+\usepackage{siunitx}                 %for units and handling numbers
+\sisetup{table-format=4.2}
+\sisetup{group-minimum-digits=3,group-separator={\,}}
+
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+
+%%------------------------------------------------------------------------------
+%%- referencing and citation
+%%------------------------------------------------------------------------------
+%%%%% Hacking natbib b/c it's loaded by elsarticle but we want to use biblatex %%%%
+%%%%% ignore natbib
+\let\bibhang\relax
+\let\citename\relax
+\let\bibfont\relax
+\let\Citeauthor\relax
+\expandafter\let\csname ver@natbib.sty\endcsname\relax
+\expandafter\let\csname c@author\endcsname\relax
+%%%%% Loading biblatex
+\usepackage[
+  backend=bibtex,
+  style=alphabetic,
+  maxbibnames=99,
+  maxcitenames=2,
+  sorting=nyt,
+  url=false,
+  isbn=false,
+  firstinits=true,
+%  sortcites
+]{biblatex}
+\renewcommand*{\multicitedelim}{\addcomma\space}
+\renewcommand\citet[1]{\textcite{#1}}
+\addbibresource{refs.bib}
+\setlength\bibitemsep{2pt}
+\renewcommand*{\bibfont}{\small}
+% \def\bibsection{\section*{\refname}} %in case header is incorrect
+
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks  = true,
+  urlcolor    = ref-turquoise,
+  linkcolor   = blue,
+  anchorcolor = ref-darkblue,
+  citecolor   = ref-darkorange,
+  colorlinks  = true,
+  pdfauthor   = {Abtin Rahimian},
+  pdftitle    = {Write up},
+  pdfcreator  = {pdflatex},
+  pdfpagemode = UseNone
+}
+
+\usepackage[capitalize]{cleveref}
+\crefname{equation}{Eq.}{Eqs.}
+\Crefname{equation}{Equation}{Equations}
+% for range of refs
+\crefrangelabelformat{equation}{(#3#1#4--#5#2#6)}
+\crefmultiformat{equation}{Eqs.~(#2#1#3)}{ and~(#2#1#3)}{, (#2#1#3)}{, and~(#2#1#3)}
+\Crefmultiformat{equation}{Equations~(#2#1#3)}{ and~(#2#1#3)}{, (#2#1#3)}{, and~(#2#1#3)}
+\crefname{appendix}{}{} %els already has appendix in the name
+\crefname{algocf}{Algorithm}{Algorithms} %cref refers to a counter
+\crefname{review}{Response}{Responses} %the counter is review
+
+\definecolor{ref-darkblue}{rgb}{0.03,0.3,0.62}
+\definecolor{ref-darkorange}{rgb}{1,0.55,0}
+\definecolor{ref-turquoise}{rgb}{0.25,0.88,0.82}
+
+%% macro to define and reference terms with document
+\usepackage{relsize}
+\newcommand\anchor[2]{\hypertargetraised{#1}{#2}}
+\newcommand\rode[2]{\hyperlink{#1}{#2}}
+\newcommand\abbrevformat[1]{\textsmaller{\uppercase{#1}}} %could do \textsc{\large\lowercase{#1}} or {\small\uppercase{#1}}, insert \textup to keep the letters in Roman/upright form, e.g. \abbrevformat{O\textup{\small pen}MP}
+\newcommand\define[1]{\anchor{def:#1}{\abbrevformat{#1}}}
+\newcommand\abbrev[1]{\rode{def:#1}{\abbrevformat{#1}}}
+
+%% correct the target location so that it's above the line
+%% from http://tex.stackexchange.com/questions/17057/hypertarget-seems-to-aim-a-line-too-low
+\makeatletter
+\newcommand{\hypertargetraised}[1]{\Hy@raisedlink{\hypertarget{#1}{}}}
+\makeatother
+
+%%------------------------------------------------------------------------------
+%%- sections and environments
+%%------------------------------------------------------------------------------
+%%- sections, referencing, and bib
+\usepackage{titlesec}
+\titleformat{\subsubsection}[runin]{\normalfont\normalsize\itshape}{\thesubsubsection.}{.5em}{}[.\hspace{.5em}]
+\titleformat{\paragraph}[runin]{\normalfont\normalsize\itshape}{\theparagraph}{}{}[.\hspace{.5em}]
+\titlespacing*{\section}{0pt}{*3}{*1.5}
+\titlespacing*{\subsection}{0pt}{*2.5}{*1}
+
+\usepackage{amsthm}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\numberwithin{equation}{section}
+
+\newcommand\para[1]{\paragraph*{#1}}
+\newcommand\lh[1]{\emph{#1}}           % line heading, useful for itemized
+\newcommand\lhb[1]{\textbf{#1}}        % line heading, useful for itemized
+
+%%------------------------------------------------------------------------------
+%%- Float
+%%------------------------------------------------------------------------------
+\usepackage{graphicx}
+\graphicspath{{figs/}}
+%% %% to untar .gz files on the fly so that the repo space is saved
+%% \ExecuteOptions{pdftex}%
+%% \DeclareGraphicsExtensions{.pdf,.png,.gz}
+%% \DeclareGraphicsRule{.gz}{pdf}{.pdf}{`gunzip -c #1|epstopdf -f -o=`echo #1|sed s/.gz/-gz-converted-to/`.pdf}
+
+\usepackage[export]{adjustbox}  % adjustment boxes in floats
+
+\usepackage[
+  format=hang,
+  singlelinecheck=false,
+  font={scriptsize},
+  labelfont=bf,
+  labelformat=simple,
+  subrefformat=simple,
+  justification=centering
+]{subfig}                      % supersedes subfigure package
+\renewcommand\thesubfigure{(\alph{subfigure})}%override the subfig format
+%\newcommand\subfigure[2][]{\subfloat[#1]{#2}}%''backward'' compatibility
+\captionsetup[subfigure]{subrefformat=simple,labelformat=simple,listofformat=subsimple,position=t}
+\captionsetup[figure]{position=b}
+
+\usepackage[margin=10pt,font=small,textfont=it,labelfont=bf,justification=justified,position=bottom]{caption}
+\usepackage[rightcaption]{sidecap}
+\sidecaptionvpos{figure}{m}
+
+% caption with a title
+\newcommand{\mcaption}[3]{
+  \ifthenelse{\isempty{#2}}
+             {\caption[#1]{#3 \label{#1}}}
+             {\caption[#1]{{\sc #2.} #3 \label{#1}}}
+}
+
+%%- Tikz & pgf
+\newlength\figureheight
+\newlength\figurewidth
+
+\newif\ifUseTikz
+\UseTikztrue
+%
+\ifUseTikz
+\usepackage{tikz,pgfplots,import}
+\pgfplotsset{compat=newest}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{backgrounds}
+\usetikzlibrary{calc}
+\usetikzlibrary{external}
+\usetikzlibrary{pgfplots.groupplots}
+\usetikzlibrary{plotmarks}
+
+\pgfplotsset{plot coordinates/math parser=false}
+
+\pgfkeys{/pgf/images/include external/.code={\includegraphics[]{#1}}}
+%\pgfkeys{/tikz/external/mode=list and make}
+\tikzexternalize[prefix=figs/]
+%\ifUseTikz\tikzset{external/export=false}\fi %use to disable externalization
+
+\newcommand{\includepgf}[2][1]{
+  \beginpgfgraphicnamed{#2}%
+  \tikzsetnextfilename{tikz-external-#2}%
+  \scalebox{#1}{\subimport{figs/}{#2.pgf}}%
+  \endpgfgraphicnamed%
+}
+
+%%disable hyperref in tikz figures
+\makeatletter
+\tikzset{
+    every picture/.style={
+        execute at begin picture={
+            \let\ref\@refstar
+        }
+    }
+}
+\makeatother
+
+%good color and b/w graph color
+\definecolor{plt-blue}{rgb}{0.0078,0.2980,0.7961}%blue
+\definecolor{plt-orange}{rgb}{1.0000,0.6431,0.2627}%orange
+\definecolor{plt-purple}{rgb}{1.0000,0.2863,0.5255}%purple
+\definecolor{plt-violet}{rgb}{0.6118,0.1765,1.0000}%violet
+
+%% %% for manual aligning figures and table
+%% \usepackage{background}
+%% \backgroundsetup{
+%%   ,contents=\tikz{\draw[step=.05in] (-.5\paperwidth,-.5\paperheight) grid (.5\paperwidth,.5\paperheight);}}
+%%   ,color=blue
+%%   ,angle=0
+%%   ,scale=1}
+
+\else%for ifUseTikz
+%
+\newcommand{\includepgf}[2][1]{
+\scalebox{#1}{\includegraphics[]{external-#2}}%
+}
+%
+\fi%for ifUseTikz
+%
+
+%%------------------------------------------------------------------------------
+%%- Tables
+%%------------------------------------------------------------------------------
+\usepackage{tabularx}     % extension of tabular
+\usepackage{booktabs}     % high quality tables
+\usepackage{multirow}
+\usepackage{collcell}     % to wrap table cells in a macro call: >{\collectcell\macro}c<{\endcollectcell}
+\usepackage{dcolumn}      % defines column type D to align decimal
+\usepackage{ctable}       % captioned table
+
+%%------------------------------------------------------------------------------
+%%- Algorithms
+%%------------------------------------------------------------------------------
+\usepackage[linesnumbered,lined,ruled,vlined,commentsnumbered]{algorithm2e}
+\newcommand\cbox[2][.4\linewidth]{\parbox[t]{#1}{#2}}
+\newcommand{\algcaption}[3]{
+        \ifthenelse{\isempty{#3}}
+                   {\caption[#1]{{\sc #2.} \label{#1}}}
+                   {\caption[#1]{{\sc #2.} \newline\small{#3} \label{#1}}}
+        }
+
+%%------------------------------------------------------------------------------
+%%- Miscelenous packages
+%%------------------------------------------------------------------------------
+\usepackage[normal]{engord} %for ordinal numbering, remove normal option to have raised suffix
+
+%%------------------------------------------------------------------------------
+%%- new math operators
+%%------------------------------------------------------------------------------
+\let\d\undefined
+\let\O\undefined
+\DeclareMathOperator{\Grad}{\nabla}
+\DeclareMathOperator{\Div}{div}
+\DeclareMathOperator{\Curl}{curl}
+\DeclareMathOperator{\argmin}{argmin}
+\DeclareMathOperator{\rank}{rank}
+\newcommand\defeq{\mathrel{\mathop :}=}
+\newcommand\eqdef{\mathrel{\mathop :}=}
+\newcommand\norm[2][{}]{\lVert #2 \rVert_{#1}}
+\newcommand\jump[1]{\llbracket #1 \rrbracket}
+\newcommand\contract[3][{\cdot}]{#2\mathop{#1}#3}
+\newcommand\inner[2]{\contract{#1}{#2}}
+\newcommand\cross[2]{#1\times #2}
+\newcommand\d{\ensuremath{\,\mathrm{d}}}
+\newcommand\dline{\ensuremath{\d s}}
+\newcommand\dsurf{\ensuremath{\d A}}
+\newcommand\dvol {\ensuremath{\d V}}
+\renewcommand\perp[1]{{#1}^{\bot}}
+\newcommand\deriv[2]{\frac{\d #1}{\d #2}}
+\newcommand\parderiv[2]{\frac{\partial #1}{\partial #2}}
+\newcommand\totderiv[2]{\frac{\d #1}{\d #2}}
+\newcommand\ii{i}
+\newcommand\O[1]{\ensuremath{\mathcal{O}\left(#1\right)}}
+\newcommand\ordinal[1]{\ifthenelse{\isin{#1}{abcdefghijklmnopqrstuvwxyz}}{\ensuremath{#1^\mathrm{th}}}{\engordnumber{#1}}}
+\newcommand\R{\mathbb{R}} \newcommand\C{\mathbb{C}}
+\newcommand\lbl[1]{\mathrm{#1}}
+\newcommand\0{\phantom{0}}
+\newcommand\range[2][n]{#2=1,\dots,#1}
+
+%%------------------------------------------------------------------------------
+%%- font shape for math objects
+%%------------------------------------------------------------------------------
+\let\vec\undefined
+\let\vector\undefined
+\DeclareMathAlphabet{\mathbfsf}{\encodingdefault}{\sfdefault}{bx}{n}
+\newcommand\discrete[1] {\mathsf   {#1}}
+\newcommand\fourier[1]  {\widehat  {#1}}
+\newcommand\scalar[1]   {#1}
+\newcommand\scalard[1]  {\discrete {#1}}
+\newcommand\vector[1]   {\bm       {#1}}
+\newcommand\vectord[1]  {\mathbfsf {#1}}%-- also change \discrete
+\newcommand\linop[1]    {\mathbf   {#1}}
+\newcommand\linopd[1]   {\mathbfsf {#1}}
+\newcommand\conv[1]     {\mathcal  {#1}}
+\newcommand\convd[1]    {\mathbfsf {#1}}
+
+%%- time stepping labels (implicit and explicit)
+\newcommand\impltag[1]{\textcolor{red}{#1}}
+\newcommand\impl[2][+]{#2^{\impltag{#1}}}
+\newcommand\expl[2][{}]{#2^{#1}}
+\renewcommand\Re{\operatorname{Re}}
+\renewcommand\Im{\operatorname{Im}}
+
+%%------------------------------------------------------------------------------
+%%- proofreading and annotation
+%%------------------------------------------------------------------------------
+\usepackage{marginnote,cprotect}
+\usepackage[obeyFinal]{todonotes}
+\usepackage[color]{changebar}
+\setlength{\changebarwidth}{4pt}
+
+\newcommand\missingref[1][cite]{\ifoptionfinal{}{\colorbox{green!40}{\textbf{[#1]}}}}
+\newcommand\attn[2][]{\hl{\bf #2}\marginnote{#1}}
+\newcommand\note[2][DRAFT]{\ifoptionfinal{}{\textcolor{orange}{[\textbf{#1:} #2]}}}
+\newcommand\authornote[2][]{\ifoptionfinal{}{\textcolor{cyan}{[\textbf{Author note #1:} #2]}}}
+\newcommand\ig[1]{\ifoptionfinal{}{\textcolor{gray}{[{\bf Ignore:} #1]}}}
+
+\definecolor{revcol1}{rgb}{0.0078,0.2980,0.7961}%blue
+\definecolor{revcol2}{rgb}{0.6118,0.1765,1.0000}%violet
+\definecolor{revcol3}{rgb}{1.0000,0.6431,0.2627}%orange
+
+\def\revcolor{revcol1}
+\newcommand\edit[2]{\textcolor{gray}{#1}\ \textcolor{\revcolor}{#2}}
+\newcommand\editt[2]{\edit{\st{#1}}{#2}}
+\newcommand\editm[2]{\textcolor{gray}{\ensuremath{#1}}\ \textcolor{\revcolor}{\ensuremath{#2}}}
+
+%% %% leaving notes as pdf comments
+%% \usepackage[open=false]{pdfcomment}
+%% \makeatletter
+%% \@ifpackageloaded{pdfcomment}{
+%%   \renewcommand\editt[2]{\pdfmarkupcomment[markup=StrikeOut,color=red]{#1}{#2}}
+%%   \renewcommand\note[2][DRAFT]{\pdfcomment[icon=Comment,color=blue]{#1: #2}}
+%% }{
+%% }
+%% \makeatother
+
+%%------------------------------------------------------------------------------
+%%- review and response tools
+%%------------------------------------------------------------------------------
+\usepackage{mdframed,framed}
+\newcounter{review}[section]
+\renewcommand{\thereview}{\thesection.\arabic{review}}
+
+\newenvironment{review}
+{\par\noindent\refstepcounter{review}\textbf{\thereview.}}
+{\par\noindent\ignorespacesafterend}
+
+\newenvironment{response}[1][\empty]{%
+  \ifthenelse{\equal{#1}{\empty}}{\label{res:\thereview}}{\label{res:#1}}
+  \begin{mdframed}[%
+      frametitle={Response \thereview.},
+      skipabove=\baselineskip plus 2pt minus 1pt,
+      skipbelow=\baselineskip plus 2pt minus 1pt,
+      linewidth=0.5pt,
+      frametitlerule=true,
+      frametitlebackgroundcolor=gray!30
+    ]%
+}{%
+  \end{mdframed}
+}
+
+\newenvironment{revres}[2]{%
+% two mandatory arguments are reviewer number (1 or 2), and
+% comment/response number e.g. {1}{2} means reviewer 1, comment 2
+\def\responseid{#1.#2}%
+\ifthenelse{\equal{#1}{1}}{\def\revcolor{revcol1}}{\def\revcolor{revcol2}}%
+\color{\revcolor}%
+\ifthenelse{\equal{#2}{\empty}}{}{\marginnote{\textit{\small Response \responseid}}}
+\ignorespaces%
+}{\ignorespacesafterend}
+
+%%------------------------------------------------------------------------------
+%%- Multiletter math variables and names
+%%------------------------------------------------------------------------------
+\newcommand\reynolds{\ensuremath{\mathit{R\kern-.13em e}}}  %{\mbox{\textit{Re}}}
+\newcommand\capillary{\ensuremath{\mathit{C\kern-.21em a}}} %{\mbox{\textit{Ca}}}
+
+\newcommand\slyr{single-layer\xspace}
+\newcommand\dlyr{double-layer\xspace}
+\newcommand\LB{Lattice Boltzmann\xspace} %not a combined name so no dash/if insisting on dash use -
+\newcommand\NS{Navier--Stokes\xspace}
+\newcommand\bc{boundary condition\xspace}
+\newcommand\gl{Gauss--Legendre\xspace}
+\newcommand\ns{near-singular\xspace}
+\newcommand\nystrom{Nystr\"om\xspace}
+\def\emdash/{\kern 0.2em---\kern 0.2em}
+
+\newcommand\gmres{\abbrev{GMRES}\xspace}
+\newcommand\pde{\abbrev{PDE}\xspace}
+\newcommand\ki{kernel-independent\xspace}
+\newcommand\kifmm{\abbrev{KIFMM}\xspace}
+\newcommand\fmm{\abbrev{FMM}}
+\newcommand\fft{\abbrev{FFT}}
+\newcommand\twod{\abbrev{2D}}   %{{\small 2}\textsc{d}\xspace}
+\newcommand\threed{\abbrev{3D}} %{{\small 3}\textsc{d}\xspace}
+
+\newcommand\e[1]{\ensuremath{e{#1}}}
+\newcommand\scie[2][1]{\ensuremath{#1e{#2}}}
+\newcommand\sci[2][1]{\ensuremath{\ifthenelse{\equal{#1}{1}}{}{#1\times}10^{#2}}}
+\newcommand\andor[3][-.15em]{#2/{\kern #1}#3}%alternative using a slash
+
+%%------------------------------------------------------------------------------
+%%- siunits wrapper
+%%------------------------------------------------------------------------------
+\def\nanom{\text{nm}}
+\def\microm{\text{$\mu$m}}
+\def\newton{\text{N}}
+\def\pico{\text{p}}
+\def\second{\text{sec}}
+\def\minute{\text{min}}
+\def\pascal{\text{P{\kern -.09em}a}}
+
+%%------------------------------------------------------------------------------
+%%- shortcuts
+%%------------------------------------------------------------------------------
+\newcommand\vx{\vector{x}}
+\newcommand\vX{\vector{X}}
+\newcommand\vy{\vector{y}}
+\newcommand\vY{\vector{Y}}
+\newcommand\vn{\vector{n}}
+\newcommand\vr{\vector{r}}
+\newcommand\vu{\vector{u}}
+
+\newcommand\xd{\vectord{x}}
+\newcommand\Xd{\vectord{X}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%- Add doc specific items blow %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\linenumbers

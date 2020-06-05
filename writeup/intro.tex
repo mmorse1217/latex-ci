@@ -1,0 +1,49 @@
+\section{Introduction\label{sec:intro}}
+\lipsum
+
+\subsection{Overview and Contributions\label{sec:overview}}
+\subsection{Limitations\label{sec:limit}}
+\subsection{Related Work\label{sec:related}}
+Citing \cite{lamport1994} and \citet{lamport1994} and \citeauthor{lamport1994}
+\subsection{Nomenclature\label{sec:notation}}
+Throughout this paper, lowercase letters refer to scalar or vector.
+Finite dimensional values are denoted by sans-serif boldface letters.
+Convolution operators are referred to by uppercase calligraphic
+script, e.g. $\conv{K}$, and the discrete version of a convolution
+operator is referred to by the same letter in uppercase sans-serif
+bold, e.g. $\convd{K}$.
+As a general rule, uppercase sans-serif bold letters denote finite
+dimensional linear operators.
+The outward normal vector to the boundary of the domain is denoted by
+$\vn$.
+The jump of a variable across an interface is denoted by
+$\jump{\cdot}$. In \cref{tbl:notation} we list symbols we use frequently
+in this paper.
+
+\begin{table}[!bht]
+  \centering
+  \begin{tabular}{
+      >{\centering\small}p{.1\linewidth} >{\small}p{.6\linewidth}  %%one column
+      %% >{\centering\small}p{.08\linewidth} >{\small}p{.34\linewidth}
+      %% | >{\centering\small}p{.08\linewidth} >{\small}p{.37\linewidth} %%two column
+    }\toprule
+    %
+    Symbol                 & Definition                                       \\\midrule
+    %
+    $\conv{K}, \linop{K}$  & generic integral operator or kernel              \\
+    $\conv{D}, \linop{D}$  & generic double-layer integral operator or kernel \\
+    $\Omega$               & problem domain                                   \\
+    $\Gamma$               & problem domain boundary                          \\
+    $\vector{n}$           & outward-pointing normal vector to $\Gamma$       \\
+    \bottomrule
+  \end{tabular}
+  \mcaption{tbl:notation}{Index of frequently used symbols and
+    operators}{}
+\end{table}
+
+Testing the commenting macros: \edit{some text}{can be replaced by
+  another} One can also can use \verb|editm| is for math mode \[E =
+\editm{m c}{m c^2}. \]
+\verb|editt| does a bit more in text mode \editt{before}{after}.
+\attn{Highlighting is easy as well}.
+Leaving notes is also \note{With some note} easy.

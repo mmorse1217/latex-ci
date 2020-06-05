@@ -1,0 +1,24 @@
+\section{Formulation\label{sec:formulation}}
+\begin{align}
+\mathcal{ABCDEFGHIJKLMNOPQRSTUVWXYZ}\\
+\mathcal{abcdefghijklmnopqrstuvwxyz}\\
+\mathpzc{ABCDEFGHIJKLMNOPQRSTUVWXYZ}\\
+\mathpzc{abcdefghijklmnopqrstuvwxyz}\\
+0123456789\\
+\text{0123456789}
+\end{align}
+\begin{figure}[!htb]
+  %  \captionsetup[figure]{justification=raggedright}
+  \centering
+  % \includegraphics[height=.25\linewidth]{fig-name}
+  \subfloat[list-entry-a][aaa\label{sfg:a}]{\missingfigure{Figure aaa}}\\
+  \subfloat[list-entry-b][bbb\label{sfg:b}]{\missingfigure{Figure bbb}}\\
+  \subfloat[list-entry-c][ccc\label{sfg:c}]{\missingfigure{Figure ccc}}
+  %
+  \mcaption{fig:label}{Caption title}{Caption long
+    \protect\subref{sfg:a} aaa,
+    \protect\subref{sfg:b} bbb, and
+    \protect\subref{sfg:c} ccc.}
+\end{figure}
+
+See in \cref{sfg:a} and \cref{fig:label} the plot for AAA.

@@ -1,0 +1,31 @@
+\begin{algorithm}
+\algcaption{alg:BDF}{Breadth-first traversal}{\abbrev{BDF} traversal of a tree.}
+%
+\DontPrintSemicolon
+\SetKwInOut{Input}{input}
+\SetKwInOut{Output}{output}
+\SetKwInOut{Complexity}{complexity}
+\SetKw{KwNot}{not}
+\SetKwFunction{root}{root}
+\SetKwFunction{children}{children}
+\SetKwFunction{append}{append}
+\SetKwFunction{IsEmpty}{is\textunderscore empty}
+\SetKwFunction{pop}{pop}
+%
+\Input{Tree $T$}
+\Output{$L$ List of nodes in \abbrev{BDF} order}
+\Complexity{\O{N}\tcp*[lf]{\cbox{When implemented efficiently}}}
+%
+\BlankLine
+%
+$L\leftarrow\emptyset$\;
+$Q\leftarrow T$.\root()\;
+
+\While{(\KwNot $Q$.\IsEmpty())}{
+  $N \leftarrow Q$.\pop()\;
+  $L$.\append($N$)\;
+  $Q$.\append($N$.\children())\;
+}
+\Return $L$
+%
+\end{algorithm}
